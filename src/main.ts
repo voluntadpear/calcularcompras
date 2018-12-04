@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import App from './App.vue';
 import './registerServiceWorker';
-import './plugins/element.js'
+import './plugins/element.js';
 
 Vue.config.productionTip = false;
 
