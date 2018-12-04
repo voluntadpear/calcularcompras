@@ -1,27 +1,39 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <div>
-      <p>
-        If Element is successfully added to this project, you'll see an
-        <code v-text="'<el-button>'"></code>
-        below
-      </p>
-      <el-button>el-button</el-button>
-    </div>
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <el-container>
+      <el-main>
+        <price-form @predictedPrice="predictedPrice = $event" />
+        <predicted-price-card :price="predictedPrice" />
+      </el-main>
+      <el-footer>
+        <p>2018 - Guillermo Peralta</p>
+      </el-footer>
+    </el-container>
   </div>
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue';
+<script lang="ts">
+import Vue from 'vue';
+import {Container, Main, Footer} from 'element-ui';
 
-export default {
+import PriceForm from './components/PriceForm.vue';
+import PredictedPriceCard from './components/PredictedPriceCard.vue';
+
+export default Vue.extend({
   name: 'app',
   components: {
-    HelloWorld,
+    [Container.name]: Container,
+    [Main.name]: Main,
+    [Footer.name]: Footer,
+    PriceForm,
+    PredictedPriceCard,
   },
-};
+  data() {
+    return {
+      predictedPrice: 0,
+    };
+  },
+});
 </script>
 
 <style>
