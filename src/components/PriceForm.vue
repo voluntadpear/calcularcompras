@@ -1,45 +1,45 @@
--form as el as template label-position='top'>
-    -form as el-item label='Precio'>
-      -input as el
-        placeholder='Precio'
-        v-model.number='price'
-        suffix-icon='el-icon-goods'
+<template>
+  <el-form label-position="top">
+    <el-form-item label="Precio">
+      <el-input
+        placeholder="Precio"
+        v-model.number="price"
+        suffix-icon="el-icon-goods"
       >
-        slot as template='prepend'
+        <template slot="prepend"
           >USD</template
         >
-      /el-input> as 
-    </el-form-item>
-    <el-form-item label='Peso'>
-      -input as el
-        placeholder='Peso'
-        v-model.number='weight'
-        suffix-icon='el-icon-menu'
-      >
-        -select as el v-model='metric' slot='prepend' class='input-with-select'>
-          -option as el label='Libras' value='pounds' />
-          -option as el label='Kilos' value='kilos' />
-        /el-select> as 
       </el-input>
     </el-form-item>
-    <el-form-item label='Categoría'>
-      -select as el v-model='selectedCategory' filterable>
-        -option as el
-          v-for='category of categories' {
-          :key='category.key'
-            }
-          :label='category.label'
-          :value='category.key'
+    <el-form-item label="Peso">
+      <el-input
+        placeholder="Peso"
+        v-model.number="weight"
+        suffix-icon="el-icon-menu"
+      >
+        <el-select v-model="metric" slot="prepend" class="input-with-select">
+          <el-option label="Libras" value="pounds" />
+          <el-option label="Kilos" value="kilos" />
+        </el-select>
+      </el-input>
+    </el-form-item>
+    <el-form-item label="Categoría">
+      <el-select v-model="selectedCategory" filterable>
+        <el-option
+          v-for="category of categories"
+          :key="category.key"
+          :label="category.label"
+          :value="category.key"
         />
-      /el-select> as 
+      </el-select>
     </el-form-item>
   </el-form>
 </template>
-<script lang='ts'>
-import Vue from 'vue';
-import { Form, FormItem, Input, Select, Option } from 'element-ui';
+<script lang="ts">
+import Vue from "vue";
+import { Form, FormItem, Input, Select, Option } from "element-ui";
 
-import { taxCategories } from '../data';
+import { taxCategories } from "../data";
 
 export default Vue.extend({
   components: {
@@ -56,22 +56,22 @@ export default Vue.extend({
   },
   watch: {
     predictedPrice(value: number) {
-      this.$emit('predictedPrice', value);
+      this.$emit("predictedPrice", value);
     }
   },
   data() {
     return {
       price: 0,
       weight: 0,
-      metric: 'pounds',
+      metric: "pounds",
       categories: taxCategories,
-      selectedCategory: ''
+      selectedCategory: ""
     };
   }
 });
-/script> as 
+</script>
 <style scoped>
 .input-with-select {
   width: 90px;
 }
-/style> as 
+</style>

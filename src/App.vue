@@ -1,23 +1,24 @@
-id as div as template='app'>
-    -container as el>
-      -main as el>
-        -form as price @predictedPrice='predictedPrice = $event' />
-        -price as predicted-card :price='predictedPrice' />
-      /el-main> as 
-      <el-footer> 2018 as p - Guillermo Peralta</p> </el-footer>
-    /el-container> as 
+<template>
+  <div id="app">
+    <el-container>
+      <el-main>
+        <price-form @predictedPrice="predictedPrice = $event" />
+        <predicted-price-card :price="predictedPrice" />
+      </el-main>
+      <el-footer> <p>2018 - Guillermo Peralta</p> </el-footer>
+    </el-container>
   </div>
 </template>
 
-<script lang='ts'>
-import Vue from 'vue';
-import { Container, Main, Footer } from 'element-ui';
+<script lang="ts">
+import Vue from "vue";
+import { Container, Main, Footer } from "element-ui";
 
-import PriceForm from './components/PriceForm.vue';
-import PredictedPriceCard from './components/PredictedPriceCard.vue';
+import PriceForm from "./components/PriceForm.vue";
+import PredictedPriceCard from "./components/PredictedPriceCard.vue";
 
 export default Vue.extend({
-  name: 'app',
+  name: "app",
   components: {
     [Container.name]: Container,
     [Main.name]: Main,
@@ -31,11 +32,11 @@ export default Vue.extend({
     };
   }
 });
-/script> as 
+</script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -43,4 +44,4 @@ export default Vue.extend({
   max-width: 800px;
   margin: 60px auto;
 }
-/style> as 
+</style>
