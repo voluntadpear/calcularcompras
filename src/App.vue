@@ -42,6 +42,14 @@ export default Vue.extend({
   text-align: center;
   color: #2c3e50;
   max-width: 800px;
-  margin: 60px auto;
+  margin: 25px auto;
+}
+
+.el-form-item__label {
+  font-size: 30px;
+}
+
+.el-input--large {
+  font-size: 24px;
 }
 </style>

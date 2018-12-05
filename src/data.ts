@@ -80,3 +80,21 @@ export const taxCategories = [
     tax: 38,
   },
 ];
+
+export const couriers = [
+  {
+    key: 'globalbox',
+    label: 'Globalbox',
+    pricePerKilo: 16.5,
+  },
+  {
+    key: 'paraguaybox',
+    label: 'Paraguaybox',
+    pricePerKilo: 16.5,
+  },
+  {
+    key: 'fastbox',
+    label: 'Fastbox',
+    pricePerKilo: 18,
+  }
+];

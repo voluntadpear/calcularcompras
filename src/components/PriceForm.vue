@@ -1,45 +1,73 @@
 <template>
-  <el-form label-position="top">
-    <el-form-item label="Precio">
-      <el-input
-        placeholder="Precio"
-        v-model.number="price"
-        suffix-icon="el-icon-goods"
-      >
-        <template slot="prepend"
-          >USD</template
-        >
-      </el-input>
-    </el-form-item>
-    <el-form-item label="Peso">
-      <el-input
-        placeholder="Peso"
-        v-model.number="weight"
-        suffix-icon="el-icon-menu"
-      >
-        <el-select v-model="metric" slot="prepend" class="input-with-select">
-          <el-option label="Libras" value="pounds" />
-          <el-option label="Kilos" value="kilos" />
-        </el-select>
-      </el-input>
-    </el-form-item>
-    <el-form-item label="Categoría">
-      <el-select v-model="selectedCategory" filterable>
-        <el-option
-          v-for="category of categories"
-          :key="category.key"
-          :label="category.label"
-          :value="category.key"
-        />
-      </el-select>
-    </el-form-item>
+  <el-form label-position="top" size="medium">
+    <el-row :gutter="40">
+      <el-col :xs="24" :sm="12" :md="12">
+        <el-form-item label="Precio">
+          <el-input
+            size="large"
+            placeholder="Precio"
+            v-model.number="price"
+            suffix-icon="el-icon-goods"
+          >
+            <template slot="prepend"
+              >USD</template
+            >
+          </el-input>
+        </el-form-item>
+      </el-col>
+      <el-col :xs="24" :sm="12" :md="12">
+        <el-form-item label="Peso">
+          <el-input
+            size="large"
+            placeholder="Peso"
+            v-model.number="weight"
+            suffix-icon="el-icon-menu"
+          >
+            <el-select
+              v-model="metric"
+              slot="prepend"
+              class="input-with-select"
+            >
+              <el-option label="Libras" value="pounds" />
+              <el-option label="Kilos" value="kilos" />
+            </el-select>
+          </el-input>
+        </el-form-item>
+      </el-col>
+    </el-row>
+    <el-row :gutter="40">
+      <el-col :xs="24" :sm="12" :md="12">
+        <el-form-item label="Courier">
+          <el-select v-model="selectedCourier" filterable size="large">
+            <el-option
+              v-for="courier of couriers"
+              :key="courier.key"
+              :label="courier.label"
+              :value="courier.key"
+            />
+          </el-select>
+        </el-form-item>
+      </el-col>
+      <el-col :xs="24" :sm="12" :md="12">
+        <el-form-item label="Categoría">
+          <el-select v-model="selectedCategory" filterable size="large">
+            <el-option
+              v-for="category of categories"
+              :key="category.key"
+              :label="category.label"
+              :value="category.key"
+            />
+          </el-select>
+        </el-form-item>
+      </el-col>
+    </el-row>
   </el-form>
 </template>
 <script lang="ts">
 import Vue from "vue";
-import { Form, FormItem, Input, Select, Option } from "element-ui";
+import { Form, FormItem, Input, Select, Option, Row, Col } from "element-ui";
 
-import { taxCategories } from "../data";
+import { taxCategories, couriers } from "../data";
 
 export default Vue.extend({
   components: {
@@ -47,11 +75,18 @@ export default Vue.extend({
     [FormItem.name]: FormItem,
     [Input.name]: Input,
     [Select.name]: Select,
-    [Option.name]: Option
+    [Option.name]: Option,
+    [Row.name]: Row,
+    [Col.name]: Col
   },
   computed: {
+    kilosWeight(): number {
+      return this.metric === "kilos" ? this.weight : this.weight * 0.454;
+    },
     predictedPrice(): number {
-      return this.price * this.weight;
+      const { pricePerKilo = 0 } =
+        this.couriers.find(c => c.key === this.selectedCourier) || {};
+      return this.price + this.kilosWeight * pricePerKilo;
     }
   },
   watch: {
@@ -65,13 +100,19 @@ export default Vue.extend({
       weight: 0,
       metric: "pounds",
       categories: taxCategories,
-      selectedCategory: ""
+      couriers,
+      selectedCategory: "",
+      selectedCourier: ""
     };
   }
 });
 </script>
 <style scoped>
 .input-with-select {
-  width: 90px;
+  width: 120px;
+}
+
+.el-select {
+  display: block;
 }
 </style>
