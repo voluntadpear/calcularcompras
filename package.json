@@ -25,6 +25,7 @@
   "dependencies": {
     "element-ui": "^2.4.11",
     "register-service-worker": "^1.5.2",
+    "v-money": "^0.8.1",
     "vue": "^2.5.17"
   },
   "devDependencies": {
