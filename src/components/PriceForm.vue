@@ -48,7 +48,7 @@
           <el-select
             v-model="selectedCourier"
             size="large"
-            label="Courier"
+            name="Courier"
             :disabled="secondRowDisabled"
           >
             <el-option
@@ -68,7 +68,7 @@
           <el-select
             v-model="selectedCategory"
             size="large"
-            label="Categoría"
+            name="Categoría"
             :disabled="secondRowDisabled"
           >
             <el-option
