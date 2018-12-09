@@ -86,6 +86,9 @@ export default Vue.extend({
       return this.metric === "kilos" ? this.weight : this.weight * 0.454;
     },
     predictedPrice(): number {
+      if (!this.selectedCourier || !this.kilosWeight || !this.taxes) {
+        return 0;
+      }
       const { pricePerKilo = 0 } =
         this.couriers.find(c => c.key === this.selectedCourier) || {};
       const shippingCost = this.kilosWeight * pricePerKilo;

@@ -3,7 +3,9 @@
     <el-container>
       <el-main>
         <price-form @predictedPrice="predictedPrice = $event" />
-        <predicted-price-card :price="predictedPrice" />
+        <transition name="el-fade-in">
+          <predicted-price-card :price="predictedPrice" v-if="predictedPrice" />
+        </transition>
       </el-main>
       <el-footer> <p>2018 - Guillermo Peralta</p> </el-footer>
     </el-container>
