@@ -22,6 +22,7 @@
           <el-input
             size="large"
             placeholder="Peso"
+            label="Peso"
             v-model.number="weight"
             suffix-icon="el-icon-menu"
           >
@@ -47,6 +48,7 @@
           <el-select
             v-model="selectedCourier"
             size="large"
+            label="Courier"
             :disabled="secondRowDisabled"
           >
             <el-option
@@ -66,6 +68,7 @@
           <el-select
             v-model="selectedCategory"
             size="large"
+            label="Categoría"
             :disabled="secondRowDisabled"
           >
             <el-option
@@ -84,6 +87,7 @@
 import Vue from "vue";
 import { Form, FormItem, Input, Select, Option, Row, Col } from "element-ui";
 import { VMoney } from "v-money";
+import currency from "currency.js";
 
 import { taxCategories, couriers, ivaCasualTax } from "../data";
 
@@ -123,7 +127,7 @@ export default Vue.extend({
       return 0;
     },
     rawPrice(): number {
-      return Number(this.price.replace(/[^0-9.-]+/g, ""));
+      return currency(this.price, { separator: ".", decimal: "," }).value;
     },
     secondRowDisabled(): boolean {
       return !this.price || !this.weight;
