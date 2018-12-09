@@ -8,6 +8,7 @@
             placeholder="Precio"
             v-model.lazy="price"
             v-money="money"
+            label="Precio"
             suffix-icon="el-icon-goods"
           >
             <template slot="prepend"
@@ -27,6 +28,7 @@
             <el-select
               v-model="metric"
               slot="prepend"
+              label="Peso"
               class="input-with-select"
             >
               <el-option label="Libras" value="pounds" />
@@ -38,8 +40,15 @@
     </el-row>
     <el-row :gutter="40">
       <el-col :xs="24" :sm="12" :md="12">
-        <el-form-item label="Courier">
-          <el-select v-model="selectedCourier" size="large">
+        <el-form-item
+          label="Courier"
+          :class="{ 'amz-disabled': secondRowDisabled }"
+        >
+          <el-select
+            v-model="selectedCourier"
+            size="large"
+            :disabled="secondRowDisabled"
+          >
             <el-option
               v-for="courier of couriers"
               :key="courier.key"
@@ -50,8 +59,15 @@
         </el-form-item>
       </el-col>
       <el-col :xs="24" :sm="12" :md="12">
-        <el-form-item label="Categoría">
-          <el-select v-model="selectedCategory" size="large">
+        <el-form-item
+          label="Categoría"
+          :class="{ 'amz-disabled': secondRowDisabled }"
+        >
+          <el-select
+            v-model="selectedCategory"
+            size="large"
+            :disabled="secondRowDisabled"
+          >
             <el-option
               v-for="category of categories"
               :key="category.key"
@@ -108,6 +124,9 @@ export default Vue.extend({
     },
     rawPrice(): number {
       return Number(this.price.replace(/[^0-9.-]+/g, ""));
+    },
+    secondRowDisabled(): boolean {
+      return !this.price || !this.weight;
     }
   },
   watch: {
@@ -125,8 +144,8 @@ export default Vue.extend({
       selectedCategory: "",
       selectedCourier: "",
       money: {
-        decimal: ".",
-        thousands: ",",
+        decimal: ",",
+        thousands: ".",
         prefix: "$ ",
         precision: 2,
         masked: false /* doesn't work with directive */
@@ -143,5 +162,9 @@ export default Vue.extend({
 
 .el-select {
   display: block;
+}
+
+.amz-disabled {
+  opacity: 0.25;
 }
 </style>
