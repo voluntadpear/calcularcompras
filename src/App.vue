@@ -33,7 +33,6 @@ import Vue from "vue";
 import { Container, Main, Footer } from "element-ui";
 
 import PriceForm from "./components/PriceForm.vue";
-import PredictedPriceCard from "./components/PredictedPriceCard.vue";
 
 export default Vue.extend({
   name: "app",
@@ -42,7 +41,7 @@ export default Vue.extend({
     [Main.name]: Main,
     [Footer.name]: Footer,
     PriceForm,
-    PredictedPriceCard
+    "predicted-price-card": () => import("./components/PredictedPriceCard.vue")
   },
   data() {
     return {
