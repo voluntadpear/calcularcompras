@@ -98,3 +98,5 @@ export const couriers = [
     pricePerKilo: 18,
   }
 ];
+
+export const ivaCasualTax = 0.13;

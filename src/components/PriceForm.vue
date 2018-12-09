@@ -39,7 +39,7 @@
     <el-row :gutter="40">
       <el-col :xs="24" :sm="12" :md="12">
         <el-form-item label="Courier">
-          <el-select v-model="selectedCourier" filterable size="large">
+          <el-select v-model="selectedCourier" size="large">
             <el-option
               v-for="courier of couriers"
               :key="courier.key"
@@ -51,7 +51,7 @@
       </el-col>
       <el-col :xs="24" :sm="12" :md="12">
         <el-form-item label="Categoría">
-          <el-select v-model="selectedCategory" filterable size="large">
+          <el-select v-model="selectedCategory" size="large">
             <el-option
               v-for="category of categories"
               :key="category.key"
@@ -69,7 +69,7 @@ import Vue from "vue";
 import { Form, FormItem, Input, Select, Option, Row, Col } from "element-ui";
 import { VMoney } from "v-money";
 
-import { taxCategories, couriers } from "../data";
+import { taxCategories, couriers, ivaCasualTax } from "../data";
 
 export default Vue.extend({
   components: {
@@ -88,7 +88,20 @@ export default Vue.extend({
     predictedPrice(): number {
       const { pricePerKilo = 0 } =
         this.couriers.find(c => c.key === this.selectedCourier) || {};
-      return this.rawPrice + this.kilosWeight * pricePerKilo;
+      const shippingCost = this.kilosWeight * pricePerKilo;
+      return this.rawPrice + shippingCost + this.taxes;
+    },
+    taxes(): number {
+      if (this.rawPrice < 100) {
+        return this.rawPrice * ivaCasualTax;
+      }
+      const category = this.categories.find(
+        ({ key }) => key === this.selectedCategory
+      );
+      if (category) {
+        return this.rawPrice * (category.tax / 100);
+      }
+      return 0;
     },
     rawPrice(): number {
       return Number(this.price.replace(/[^0-9.-]+/g, ""));
