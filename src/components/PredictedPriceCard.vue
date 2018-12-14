@@ -37,7 +37,7 @@ export default Vue.extend({
   },
   filters: {
     currency(value: number, decimals: number) {
-      return value.toFixed(decimals);
+      return value.toLocaleString("es-PY", { maximumFractionDigits: decimals });
     }
   }
 });

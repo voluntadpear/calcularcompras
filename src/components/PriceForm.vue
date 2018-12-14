@@ -1,5 +1,5 @@
 <template>
-  <el-form label-position="top" size="medium">
+  <el-form label-position="top" size="medium" lang="es-PY">
     <el-row :gutter="40">
       <el-col :xs="24" :sm="12" :md="12">
         <el-form-item label="Precio">
