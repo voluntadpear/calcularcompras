@@ -50,6 +50,28 @@
       </el-col>
     </el-row>
     <el-row :gutter="40">
+      <el-col :span="24">
+        <el-form-item
+          label="Envío e Impuestos EE.UU."
+          :class="{ 'amz-disabled': secondRowDisabled }"
+        >
+          <el-money-input
+            size="large"
+            placeholder="Costo"
+            @input="usShippingCost = $event"
+            :money="currencyInputMoneyConfig"
+            label="Envío e Impuestos EE.UU."
+            suffix-icon="el-icon-tickets"
+            :disabled="secondRowDisabled"
+          >
+            <template slot="prepend"
+              >USD</template
+            >
+          </el-money-input>
+        </el-form-item>
+      </el-col>
+    </el-row>
+    <el-row :gutter="40">
       <el-col :xs="24" :sm="12" :md="12">
         <el-form-item
           label="Courier"
@@ -131,8 +153,8 @@ export default Vue.extend({
       }
       const { pricePerKilo = 0 } =
         this.couriers.find(c => c.key === this.selectedCourier) || {};
-      const shippingCost = this.kilosWeight * pricePerKilo;
-      return this.price + shippingCost + this.taxes;
+      const pyShippingCost = this.kilosWeight * pricePerKilo;
+      return this.price + +this.usShippingCost + pyShippingCost + this.taxes;
     },
     taxes(): number {
       if (this.price < 100) {
@@ -158,6 +180,7 @@ export default Vue.extend({
   data() {
     return {
       price: 0,
+      usShippingCost: 0,
       weight: 0,
       metric: "pounds",
       categories: taxCategories,
