@@ -29,6 +29,7 @@
               >
                 <el-option label="Libras" value="pounds" />
                 <el-option label="Kilos" value="kilos" />
+                <el-option label="Onzas" value="ounces" />
               </el-select>
             </el-form-item>
           </el-col>
@@ -113,7 +114,16 @@ export default Vue.extend({
   },
   computed: {
     kilosWeight(): number {
-      return this.metric === "kilos" ? this.weight : this.weight * 0.454;
+      const kilosInPound = 0.4536;
+      const kilosInOunce = 0.0283495;
+      switch (this.metric) {
+        case "pounds":
+          return this.weight * kilosInPound;
+        case "ounces":
+          return this.weight * kilosInOunce;
+        default:
+          return this.weight;
+      }
     },
     predictedPrice(): number {
       if (!this.selectedCourier || !this.kilosWeight || !this.taxes) {

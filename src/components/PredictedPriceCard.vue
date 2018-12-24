@@ -3,7 +3,9 @@
     <h2>
       USD $<strong>{{ price | currency(2) }}</strong>
     </h2>
-    <h3 v-if="priceGuaranies">(Gs. {{ priceGuaranies | currency(0) }})</h3>
+    <transition name="fade">
+      <h3 v-if="priceGuaranies">(Gs. {{ priceGuaranies | currency(0) }})</h3>
+    </transition>
   </el-card>
 </template>
 <script lang="ts">
@@ -42,3 +44,13 @@ export default Vue.extend({
   }
 });
 </script>
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.8s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
