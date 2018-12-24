@@ -3,7 +3,7 @@
     <h2>
       USD $<strong>{{ price | currency(2) }}</strong>
     </h2>
-    <h3>(Gs. {{ priceGuaranies | currency(0) }})</h3>
+    <h3 v-if="priceGuaranies">(Gs. {{ priceGuaranies | currency(0) }})</h3>
   </el-card>
 </template>
 <script lang="ts">

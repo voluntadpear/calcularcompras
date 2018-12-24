@@ -3,40 +3,49 @@
     <el-row :gutter="40">
       <el-col :xs="24" :sm="12" :md="12">
         <el-form-item label="Precio">
-          <el-input
+          <el-money-input
             size="large"
             placeholder="Precio"
-            v-model.lazy="price"
-            v-money="money"
+            @input="price = $event"
+            :money="currencyInputMoneyConfig"
             label="Precio"
             suffix-icon="el-icon-goods"
           >
             <template slot="prepend"
               >USD</template
             >
-          </el-input>
+          </el-money-input>
         </el-form-item>
       </el-col>
       <el-col :xs="24" :sm="12" :md="12">
-        <el-form-item label="Peso">
-          <el-input
-            size="large"
-            placeholder="Peso"
-            label="Peso"
-            v-model.number="weight"
-            suffix-icon="el-icon-menu"
-          >
-            <el-select
-              v-model="metric"
-              slot="prepend"
-              label="Peso"
-              class="input-with-select"
-            >
-              <el-option label="Libras" value="pounds" />
-              <el-option label="Kilos" value="kilos" />
-            </el-select>
-          </el-input>
-        </el-form-item>
+        <el-row type="flex" align="bottom">
+          <el-col :span="9">
+            <el-form-item>
+              <el-select
+                v-model="metric"
+                label="Peso"
+                class="metric-select"
+                size="large"
+              >
+                <el-option label="Libras" value="pounds" />
+                <el-option label="Kilos" value="kilos" />
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="15">
+            <el-form-item label="Peso">
+              <el-money-input
+                size="large"
+                placeholder="Peso"
+                @input="weight = $event"
+                :money="weightInputMoneyConfig"
+                label="Peso"
+                suffix-icon="el-icon-menu"
+              >
+              </el-money-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
       </el-col>
     </el-row>
     <el-row :gutter="40">
@@ -85,21 +94,22 @@
 </template>
 <script lang="ts">
 import Vue from "vue";
-import { Form, FormItem, Input, Select, Option, Row, Col } from "element-ui";
+import { Form, FormItem, Select, Option, Row, Col } from "element-ui";
 import { VMoney } from "v-money";
 import currency from "currency.js";
 
 import { taxCategories, couriers, ivaCasualTax } from "../data";
+import ElMoneyInput from "./ElMoneyInput.vue";
 
 export default Vue.extend({
   components: {
     [Form.name]: Form,
     [FormItem.name]: FormItem,
-    [Input.name]: Input,
     [Select.name]: Select,
     [Option.name]: Option,
     [Row.name]: Row,
-    [Col.name]: Col
+    [Col.name]: Col,
+    ElMoneyInput
   },
   computed: {
     kilosWeight(): number {
@@ -112,22 +122,19 @@ export default Vue.extend({
       const { pricePerKilo = 0 } =
         this.couriers.find(c => c.key === this.selectedCourier) || {};
       const shippingCost = this.kilosWeight * pricePerKilo;
-      return this.rawPrice + shippingCost + this.taxes;
+      return this.price + shippingCost + this.taxes;
     },
     taxes(): number {
-      if (this.rawPrice < 100) {
-        return this.rawPrice * ivaCasualTax;
+      if (this.price < 100) {
+        return this.price * ivaCasualTax;
       }
       const category = this.categories.find(
         ({ key }) => key === this.selectedCategory
       );
       if (category) {
-        return this.rawPrice * (category.tax / 100);
+        return this.price * (category.tax / 100);
       }
       return 0;
-    },
-    rawPrice(): number {
-      return currency(this.price, { separator: ".", decimal: "," }).value;
     },
     secondRowDisabled(): boolean {
       return !this.price || !this.weight;
@@ -140,17 +147,23 @@ export default Vue.extend({
   },
   data() {
     return {
-      price: "0",
+      price: 0,
       weight: 0,
       metric: "pounds",
       categories: taxCategories,
       couriers,
       selectedCategory: "",
       selectedCourier: "",
-      money: {
+      currencyInputMoneyConfig: {
         decimal: ",",
         thousands: ".",
         prefix: "$ ",
+        precision: 2,
+        masked: false /* doesn't work with directive */
+      },
+      weightInputMoneyConfig: {
+        decimal: ",",
+        thousands: ".",
         precision: 2,
         masked: false /* doesn't work with directive */
       }
@@ -160,15 +173,20 @@ export default Vue.extend({
 });
 </script>
 <style scoped>
-.input-with-select {
-  width: 120px;
-}
-
 .el-select {
   display: block;
 }
 
 .amz-disabled {
   opacity: 0.25;
+}
+
+.metric-select {
+  margin-bottom: 3px;
+}
+
+.metric-select >>> .el-input__inner {
+  background-color: #f5f7fa;
+  color: #909399;
 }
 </style>
