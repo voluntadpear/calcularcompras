@@ -1,7 +1,7 @@
 export const taxCategories = [
   {
     key: 'electronica',
-    label: 'Electrónica',
+    label: 'Electrónica y Telecomunicaciones',
     tax: 21,
   },
   {
@@ -79,6 +79,21 @@ export const taxCategories = [
     label: 'Esencias para Vape',
     tax: 38,
   },
+  {
+    key: 'bijouterie',
+    label: 'Bijouterie',
+    tax: 26
+  },
+  {
+    key: 'bijouterie',
+    label: 'Bijouterie',
+    tax: 26
+  },
+  {
+    key: 'articulos_mascotas',
+    label: 'Artículos para Mascotas',
+    tax: 38
+  }
 ];
 
 export const couriers = [
