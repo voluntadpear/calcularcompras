@@ -19,8 +19,8 @@
       </el-col>
       <el-col :xs="24" :sm="12" :md="12">
         <el-row type="flex" align="bottom">
-          <el-col :span="9">
-            <el-form-item>
+          <el-form-item label="Peso">
+            <el-col :span="9">
               <el-select
                 v-model="metric"
                 label="Peso"
@@ -31,10 +31,8 @@
                 <el-option label="Kilos" value="kilos" />
                 <el-option label="Onzas" value="ounces" />
               </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :span="15">
-            <el-form-item label="Peso">
+            </el-col>
+            <el-col :span="15">
               <el-money-input
                 size="large"
                 placeholder="Peso"
@@ -44,8 +42,8 @@
                 suffix-icon="el-icon-menu"
               >
               </el-money-input>
-            </el-form-item>
-          </el-col>
+            </el-col>
+          </el-form-item>
         </el-row>
       </el-col>
     </el-row>
