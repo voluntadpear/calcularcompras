@@ -13,14 +13,17 @@
           <a
             href="https://docs.google.com/spreadsheets/d/1R8RQ28INLV1ugQGe4kwfwwOx4LsadlQlmuh3PqTVA1A"
             target="_blank"
+            rel="noopener"
             >este spreadsheet</a
           >
           de Alejandro Feltes
         </p>
         <p>
           Cotización gracias a
-          <a href="https://dolar.melizeche.com/" target="_blank">Dolar Py</a> de
-          Marce Elizeche
+          <a href="https://dolar.melizeche.com/" target="_blank" rel="noopener"
+            >Dolar Py</a
+          >
+          de Marce Elizeche
         </p>
         <p>2018 - Guillermo Peralta</p>
       </el-footer>
