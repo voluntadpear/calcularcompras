@@ -5,6 +5,21 @@ export const taxCategories = [
     tax: 21,
   },
   {
+    key: 'laptops',
+    label: 'Laptops',
+    tax: 15
+  },
+  {
+    key: 'celulares',
+    label: 'Celulares',
+    tax: 21
+  },
+  {
+    key: 'gps',
+    label: 'GPS',
+    tax: 18
+  },
+  {
     key: 'videojuegos',
     label: 'Videojuegos y Consolas',
     tax: 22,
@@ -92,6 +107,11 @@ export const taxCategories = [
   {
     key: 'articulos_mascotas',
     label: 'Artículos para Mascotas',
+    tax: 38
+  },
+  {
+    key: 'cultura_fisica',
+    label: 'Cultura Física',
     tax: 38
   }
 ];
