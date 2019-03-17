@@ -138,6 +138,13 @@ import currency from "currency.js";
 import { taxCategories, couriers, ivaCasualTax, Courier } from "../data";
 import ElMoneyInput from "./ElMoneyInput.vue";
 
+export interface PricePrediction {
+  itemPrice: number;
+  taxes: number;
+  usShippingCost: number;
+  shippingCost: number;
+}
+
 export default Vue.extend({
   components: {
     [Form.name]: Form,
@@ -165,13 +172,18 @@ export default Vue.extend({
           return this.weight;
       }
     },
-    predictedPrice(): number {
+    predictedPrice(): PricePrediction {
+      const response = {
+        itemPrice: (this.price as number) || 0,
+        usShippingCost: (this.usShippingCost as number) || 0,
+        taxes: (this.taxes as number) || 0
+      };
       if (
         !this.selectedCourier ||
         !this.kilosWeight ||
         (!this.taxIncludedPlan && !this.taxes)
       ) {
-        return 0;
+        return { ...response, shippingCost: 0 };
       }
       const { pricePerKilo = 0, taxIncludedPlanPricePerKilo = 0 } =
         this.courierRecord || {};
@@ -179,7 +191,7 @@ export default Vue.extend({
         ? taxIncludedPlanPricePerKilo
         : pricePerKilo;
       const pyShippingCost = this.kilosWeight * priceToUse;
-      return this.price + +this.usShippingCost + pyShippingCost + this.taxes;
+      return { ...response, shippingCost: pyShippingCost };
     },
     taxes(): number {
       if (this.taxIncludedPlan) {

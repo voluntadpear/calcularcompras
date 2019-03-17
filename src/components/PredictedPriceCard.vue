@@ -1,23 +1,53 @@
 <template>
   <el-card class="box-card">
     <h2>
-      USD $<strong>{{ price | currency(2) }}</strong>
+      USD $<strong>{{ finalPrice | currency(2) }}</strong>
     </h2>
     <transition name="fade">
       <h3 v-if="priceGuaranies">(Gs. {{ priceGuaranies | currency(0) }})</h3>
     </transition>
+    <el-collapse>
+      <el-collapse-item title="Detalles">
+        <ul id="price-breakdown">
+          <li>
+            <strong>Precio original: </strong>USD ${{
+              price.itemPrice | currency(2)
+            }}
+          </li>
+          <li>
+            <strong>Shipping hasta casilla en EE.UU: </strong>USD ${{
+              price.usShippingCost | currency(2)
+            }}
+          </li>
+          <li>
+            <strong>Flete: </strong>USD ${{ price.shippingCost | currency(2) }}
+          </li>
+          <li>
+            <strong>Impuestos Aduaneros: </strong>USD ${{
+              price.taxes | currency(2)
+            }}
+          </li>
+        </ul>
+      </el-collapse-item>
+    </el-collapse>
   </el-card>
 </template>
 <script lang="ts">
 import Vue from "vue";
-import { Card } from "element-ui";
+import { Card, Collapse, CollapseItem } from "element-ui";
+import { PricePrediction } from "@/components/PriceForm.vue";
 
 export default Vue.extend({
   components: {
-    [Card.name]: Card
+    [Card.name]: Card,
+    [Collapse.name]: Collapse,
+    [CollapseItem.name]: CollapseItem
   },
   props: {
-    price: Number
+    price: {
+      type: Object as () => PricePrediction,
+      required: true
+    }
   },
   data() {
     return {
@@ -25,8 +55,16 @@ export default Vue.extend({
     };
   },
   computed: {
+    finalPrice(): number {
+      return (
+        this.price.itemPrice +
+        this.price.usShippingCost +
+        this.price.shippingCost +
+        this.price.taxes
+      );
+    },
     priceGuaranies(): number {
-      return this.price * this.rate;
+      return this.finalPrice * this.rate;
     }
   },
   async created() {
@@ -52,5 +90,9 @@ export default Vue.extend({
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
+}
+
+#price-breakdown {
+  text-align: start;
 }
 </style>

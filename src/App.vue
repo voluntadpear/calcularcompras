@@ -4,7 +4,10 @@
       <el-main>
         <price-form @predictedPrice="predictedPrice = $event" />
         <transition name="el-fade-in">
-          <predicted-price-card :price="predictedPrice" v-if="predictedPrice" />
+          <predicted-price-card
+            :price="predictedPrice"
+            v-if="predictedPrice && predictedPrice.shippingCost"
+          />
         </transition>
       </el-main>
       <el-footer>
