@@ -29,6 +29,11 @@
           de Marce Elizeche
         </p>
         <p>2018 - Guillermo Peralta</p>
+        <small id="disclaimer"
+          ><strong>Atención: </strong> Costos no garantizados. Consultar con
+          cada empresa en específico para conocer el precio final. Precios de
+          referencia sólo válidos para Asunción.</small
+        >
       </el-footer>
     </el-container>
   </div>
@@ -74,5 +79,9 @@ export default Vue.extend({
 
 .el-input--large {
   font-size: 24px;
+}
+
+#disclaimer {
+  padding-bottom: 50px;
 }
 </style>

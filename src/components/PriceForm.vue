@@ -120,7 +120,6 @@
           <el-checkbox
             size="large"
             v-model="taxIncludedPlan"
-            border
             class="full-checkbox"
             >Plan con impuestos incluidos</el-checkbox
           >

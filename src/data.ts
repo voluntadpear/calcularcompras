@@ -135,7 +135,23 @@ export const couriers: Courier[] = [
     key: 'sendit',
     label: 'Sendit',
     taxIncludedPlanPricePerKilo: 20.9
-  }
+  },
+  {
+    key: 'saspy',
+    label: 'Saspy',
+    pricePerKilo: 15.5,
+    taxIncludedPlanPricePerKilo: 20.5
+  },
+  {
+    key: 'pytade',
+    label: 'PyTrade',
+    taxIncludedPlanPricePerKilo: 20.9
+  },
+  {
+    key: 'dinacopa',
+    label: 'Club Dinacopa Box',
+    pricePerKilo: 15.5
+  },
 ];
 
 export const ivaCasualTax = 0.13;
