@@ -99,7 +99,7 @@
             v-model="selectedCategory"
             size="large"
             name="Categoría"
-            :disabled="secondRowDisabled"
+            :disabled="secondRowDisabled || taxIncludedPlan"
           >
             <el-option
               v-for="category of categories"
@@ -111,15 +111,31 @@
         </el-form-item>
       </el-col>
     </el-row>
+    <el-row
+      :gutter="40"
+      v-if="hasTaxIncludedPlanPricePerKilo && !onlyTaxIncludedPlanPricePerKilo"
+    >
+      <el-col :xs="12" :sm="12" :md="12">
+        <el-form-item>
+          <el-checkbox
+            size="large"
+            v-model="taxIncludedPlan"
+            border
+            class="full-checkbox"
+            >Plan con impuestos incluidos</el-checkbox
+          >
+        </el-form-item>
+      </el-col>
+    </el-row>
   </el-form>
 </template>
 <script lang="ts">
 import Vue from "vue";
-import { Form, FormItem, Select, Option, Row, Col } from "element-ui";
+import { Form, FormItem, Select, Option, Row, Col, Checkbox } from "element-ui";
 import { VMoney } from "v-money";
 import currency from "currency.js";
 
-import { taxCategories, couriers, ivaCasualTax } from "../data";
+import { taxCategories, couriers, ivaCasualTax, Courier } from "../data";
 import ElMoneyInput from "./ElMoneyInput.vue";
 
 export default Vue.extend({
@@ -130,9 +146,13 @@ export default Vue.extend({
     [Option.name]: Option,
     [Row.name]: Row,
     [Col.name]: Col,
+    [Checkbox.name]: Checkbox,
     ElMoneyInput
   },
   computed: {
+    courierRecord(): Courier | undefined {
+      return this.couriers.find(c => c.key === this.selectedCourier);
+    },
     kilosWeight(): number {
       const kilosInPound = 0.4536;
       const kilosInOunce = 0.0283495;
@@ -146,16 +166,26 @@ export default Vue.extend({
       }
     },
     predictedPrice(): number {
-      if (!this.selectedCourier || !this.kilosWeight || !this.taxes) {
+      if (
+        !this.selectedCourier ||
+        !this.kilosWeight ||
+        (!this.taxIncludedPlan && !this.taxes)
+      ) {
         return 0;
       }
-      const { pricePerKilo = 0 } =
-        this.couriers.find(c => c.key === this.selectedCourier) || {};
-      const pyShippingCost = this.kilosWeight * pricePerKilo;
+      const { pricePerKilo = 0, taxIncludedPlanPricePerKilo = 0 } =
+        this.courierRecord || {};
+      const priceToUse = this.hasTaxIncludedPlanPricePerKilo
+        ? taxIncludedPlanPricePerKilo
+        : pricePerKilo;
+      const pyShippingCost = this.kilosWeight * priceToUse;
       return this.price + +this.usShippingCost + pyShippingCost + this.taxes;
     },
     taxes(): number {
-      if (this.price < 100) {
+      if (this.taxIncludedPlan) {
+        return 0;
+      }
+      if (this.price < 100 || this.taxIncludedPlan) {
         return this.price * ivaCasualTax;
       }
       const category = this.categories.find(
@@ -168,11 +198,29 @@ export default Vue.extend({
     },
     secondRowDisabled(): boolean {
       return !this.price || !this.weight;
+    },
+    hasTaxIncludedPlanPricePerKilo(): boolean {
+      const courier = this.courierRecord;
+      return Boolean(courier && courier.taxIncludedPlanPricePerKilo);
+    },
+    onlyTaxIncludedPlanPricePerKilo(): boolean {
+      const courier = this.courierRecord;
+      return Boolean(
+        courier && this.hasTaxIncludedPlanPricePerKilo && !courier.pricePerKilo
+      );
     }
   },
   watch: {
     predictedPrice(value: number) {
       this.$emit("predictedPrice", value);
+    },
+    hasTaxIncludedPlanPricePerKilo(value: boolean) {
+      if (!value) {
+        // reset checkbox
+        this.taxIncludedPlan = false;
+      } else if (this.courierRecord && !this.courierRecord.pricePerKilo) {
+        this.taxIncludedPlan = true;
+      }
     }
   },
   data() {
@@ -185,6 +233,7 @@ export default Vue.extend({
       couriers,
       selectedCategory: "",
       selectedCourier: "",
+      taxIncludedPlan: false,
       currencyInputMoneyConfig: {
         decimal: ",",
         thousands: ".",
@@ -219,5 +268,9 @@ export default Vue.extend({
 .metric-select >>> .el-input__inner {
   background-color: #f5f7fa;
   color: #909399;
+}
+
+.full-checkbox {
+  width: 100%;
 }
 </style>

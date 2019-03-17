@@ -95,16 +95,6 @@ export const taxCategories = [
     tax: 38,
   },
   {
-    key: 'bijouterie',
-    label: 'Bijouterie',
-    tax: 26
-  },
-  {
-    key: 'bijouterie',
-    label: 'Bijouterie',
-    tax: 26
-  },
-  {
     key: 'articulos_mascotas',
     label: 'Artículos para Mascotas',
     tax: 38
@@ -116,21 +106,35 @@ export const taxCategories = [
   }
 ];
 
-export const couriers = [
+export interface Courier {
+  key: string;
+  label: string;
+  pricePerKilo?: number;
+  taxIncludedPlanPricePerKilo?: number;
+}
+
+export const couriers: Courier[] = [
   {
     key: 'globalbox',
     label: 'Globalbox',
     pricePerKilo: 16.5,
+    taxIncludedPlanPricePerKilo: 21.5
   },
   {
     key: 'paraguaybox',
     label: 'Paraguaybox',
     pricePerKilo: 16.5,
+    taxIncludedPlanPricePerKilo: 21.5
   },
   {
-    key: 'fastbox',
-    label: 'Fastbox',
-    pricePerKilo: 18,
+    key: 'netbox',
+    label: 'Netbox',
+    taxIncludedPlanPricePerKilo: 21
+  },
+  {
+    key: 'sendit',
+    label: 'Sendit',
+    taxIncludedPlanPricePerKilo: 20.9
   }
 ];
 
