@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "currency.js": "^1.2.1",
-    "element-ui": "^2.4.11",
+    "element-ui": "^2.6.1",
     "register-service-worker": "^1.5.2",
     "v-money": "^0.8.1",
     "vue": "^2.5.17"
