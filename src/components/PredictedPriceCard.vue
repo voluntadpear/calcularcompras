@@ -8,26 +8,41 @@
     </transition>
     <el-collapse>
       <el-collapse-item title="Detalles">
-        <ul id="price-breakdown">
-          <li>
-            <strong>Precio original: </strong>USD ${{
-              price.itemPrice | currency(2)
-            }}
-          </li>
-          <li>
-            <strong>Shipping hasta casilla en EE.UU: </strong>USD ${{
-              price.usShippingCost | currency(2)
-            }}
-          </li>
-          <li>
-            <strong>Flete: </strong>USD ${{ price.shippingCost | currency(2) }}
-          </li>
-          <li>
-            <strong>Impuestos Aduaneros: </strong>USD ${{
-              price.taxes | currency(2)
-            }}
-          </li>
-        </ul>
+        <table id="price-breakdown">
+          <tbody>
+            <tr>
+              <td><strong>Precio original 📱: </strong></td>
+              <td>
+                USD
+                <span class="price">${{ price.itemPrice | currency(2) }}</span>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Shipping EE.UU 🇺🇸: </strong></td>
+              <td>
+                USD
+                <span class="price"
+                  >${{ price.usShippingCost | currency(2) }}</span
+                >
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Flete 🚛: </strong></td>
+              <td>
+                USD
+                <span class="price"
+                  >${{ price.shippingCost | currency(2) }}</span
+                >
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Impuestos aduaneros 💸: </strong></td>
+              <td>
+                USD <span class="price">${{ price.taxes | currency(2) }}</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </el-collapse-item>
     </el-collapse>
   </el-card>
@@ -92,7 +107,12 @@ export default Vue.extend({
   opacity: 0;
 }
 
-#price-breakdown {
-  text-align: start;
+#price-breakdown td {
+  padding-right: 20px;
+  text-align: left;
+}
+
+span.price {
+  font-weight: 500;
 }
 </style>

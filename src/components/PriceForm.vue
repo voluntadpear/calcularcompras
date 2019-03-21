@@ -48,7 +48,7 @@
       </el-col>
     </el-row>
     <el-row :gutter="40">
-      <el-col :span="24">
+      <el-col :xs="24" :sm="12" :md="12">
         <el-form-item
           label="Envío e Impuestos EE.UU."
           :class="{ 'amz-disabled': secondRowDisabled }"
@@ -68,8 +68,6 @@
           </el-money-input>
         </el-form-item>
       </el-col>
-    </el-row>
-    <el-row :gutter="40">
       <el-col :xs="24" :sm="12" :md="12">
         <el-form-item
           label="Courier"
@@ -90,17 +88,26 @@
           </el-select>
         </el-form-item>
       </el-col>
-      <el-col :xs="24" :sm="12" :md="12">
+    </el-row>
+    <el-row :gutter="40" type="flex" class="wrap">
+      <el-col :xs="24" :sm="12" :md="12" class="push-bottom">
+        <el-form-item :class="{ 'amz-disabled': secondRowDisabled }">
+          <el-checkbox
+            size="large"
+            v-model="taxIncludedPlan"
+            class="full-checkbox"
+            :disabled="onlyTaxIncludedPlanPricePerKilo"
+            border
+            >Plan con impuestos incluidos</el-checkbox
+          >
+        </el-form-item>
+      </el-col>
+      <el-col :xs="24" :sm="12" :md="12" v-if="needsCategory">
         <el-form-item
           label="Categoría"
           :class="{ 'amz-disabled': secondRowDisabled }"
         >
-          <el-select
-            v-model="selectedCategory"
-            size="large"
-            name="Categoría"
-            :disabled="secondRowDisabled || taxIncludedPlan"
-          >
+          <el-select v-model="selectedCategory" size="large" name="Categoría">
             <el-option
               v-for="category of categories"
               :key="category.key"
@@ -108,21 +115,6 @@
               :value="category.key"
             />
           </el-select>
-        </el-form-item>
-      </el-col>
-    </el-row>
-    <el-row
-      :gutter="40"
-      v-if="hasTaxIncludedPlanPricePerKilo && !onlyTaxIncludedPlanPricePerKilo"
-    >
-      <el-col :xs="12" :sm="12" :md="12">
-        <el-form-item>
-          <el-checkbox
-            size="large"
-            v-model="taxIncludedPlan"
-            class="full-checkbox"
-            >Plan con impuestos incluidos</el-checkbox
-          >
         </el-form-item>
       </el-col>
     </el-row>
@@ -193,7 +185,7 @@ export default Vue.extend({
       return { ...response, shippingCost: pyShippingCost };
     },
     taxes(): number {
-      if (this.taxIncludedPlan) {
+      if (this.taxIncludedPlan || !this.selectedCategory) {
         return 0;
       }
       if (this.price < 100 || this.taxIncludedPlan) {
@@ -219,6 +211,11 @@ export default Vue.extend({
       return Boolean(
         courier && this.hasTaxIncludedPlanPricePerKilo && !courier.pricePerKilo
       );
+    },
+    needsCategory(): boolean {
+      return Boolean(
+        !this.secondRowDisabled && !this.taxIncludedPlan && this.selectedCourier
+      );
     }
   },
   watch: {
@@ -229,7 +226,7 @@ export default Vue.extend({
       if (!value) {
         // reset checkbox
         this.taxIncludedPlan = false;
-      } else if (this.courierRecord && !this.courierRecord.pricePerKilo) {
+      } else {
         this.taxIncludedPlan = true;
       }
     }
@@ -283,5 +280,13 @@ export default Vue.extend({
 
 .full-checkbox {
   width: 100%;
+}
+
+.push-bottom {
+  align-self: flex-end;
+}
+
+.wrap {
+  flex-wrap: wrap;
 }
 </style>
