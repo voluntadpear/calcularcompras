@@ -10,7 +10,7 @@
           />
         </transition>
       </el-main>
-      <el-footer>
+      <el-footer class="app-footer">
         <p>
           Basado en
           <a
@@ -28,7 +28,7 @@
           >
           de Marce Elizeche
         </p>
-        <p>2018 - Guillermo Peralta</p>
+        <p>2019 - Guillermo Peralta</p>
         <small id="disclaimer"
           ><strong>Atención: </strong> Costos no garantizados. Consultar con
           cada empresa en específico para conocer el precio final. Precios de
@@ -81,7 +81,19 @@ export default Vue.extend({
   font-size: 24px;
 }
 
+.app-footer {
+  margin-top: 100px;
+}
 #disclaimer {
   padding-bottom: 50px;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.8s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

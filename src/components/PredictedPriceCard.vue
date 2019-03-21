@@ -98,15 +98,6 @@ export default Vue.extend({
 });
 </script>
 <style scoped>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.8s;
-}
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
-}
-
 #price-breakdown td {
   padding-right: 20px;
   text-align: left;

@@ -51,6 +51,7 @@
       <el-col :xs="24" :sm="12" :md="12">
         <el-form-item
           label="Envío e Impuestos EE.UU."
+          class="opacity-transition"
           :class="{ 'amz-disabled': secondRowDisabled }"
         >
           <el-money-input
@@ -71,6 +72,7 @@
       <el-col :xs="24" :sm="12" :md="12">
         <el-form-item
           label="Courier"
+          class="opacity-transition"
           :class="{ 'amz-disabled': secondRowDisabled }"
         >
           <el-select
@@ -91,7 +93,10 @@
     </el-row>
     <el-row :gutter="40" type="flex" class="wrap">
       <el-col :xs="24" :sm="12" :md="12" class="push-bottom">
-        <el-form-item :class="{ 'amz-disabled': secondRowDisabled }">
+        <el-form-item
+          class="opacity-transition"
+          :class="{ 'amz-disabled': secondRowDisabled }"
+        >
           <el-checkbox
             size="large"
             v-model="taxIncludedPlan"
@@ -102,21 +107,24 @@
           >
         </el-form-item>
       </el-col>
-      <el-col :xs="24" :sm="12" :md="12" v-if="needsCategory">
-        <el-form-item
-          label="Categoría"
-          :class="{ 'amz-disabled': secondRowDisabled }"
-        >
-          <el-select v-model="selectedCategory" size="large" name="Categoría">
-            <el-option
-              v-for="category of categories"
-              :key="category.key"
-              :label="category.label"
-              :value="category.key"
-            />
-          </el-select>
-        </el-form-item>
-      </el-col>
+      <transition name="fade">
+        <el-col :xs="24" :sm="12" :md="12" v-if="needsCategory">
+          <el-form-item
+            label="Categoría"
+            class="opacity-transition"
+            :class="{ 'amz-disabled': secondRowDisabled }"
+          >
+            <el-select v-model="selectedCategory" size="large" name="Categoría">
+              <el-option
+                v-for="category of categories"
+                :key="category.key"
+                :label="category.label"
+                :value="category.key"
+              />
+            </el-select>
+          </el-form-item>
+        </el-col>
+      </transition>
     </el-row>
   </el-form>
 </template>
@@ -172,7 +180,7 @@ export default Vue.extend({
       if (
         !this.selectedCourier ||
         !this.kilosWeight ||
-        (!this.taxIncludedPlan && !this.taxes)
+        (this.needsCategory && !this.taxes)
       ) {
         return { ...response, shippingCost: 0 };
       }
@@ -214,7 +222,10 @@ export default Vue.extend({
     },
     needsCategory(): boolean {
       return Boolean(
-        !this.secondRowDisabled && !this.taxIncludedPlan && this.selectedCourier
+        !this.secondRowDisabled &&
+          !this.taxIncludedPlan &&
+          this.selectedCourier &&
+          this.price > 100
       );
     }
   },
@@ -267,6 +278,10 @@ export default Vue.extend({
 
 .amz-disabled {
   opacity: 0.25;
+}
+
+.opacity-transition {
+  transition: opacity 0.5s;
 }
 
 .metric-select {
