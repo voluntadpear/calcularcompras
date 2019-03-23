@@ -62,12 +62,11 @@ export default Vue.extend({
     price: {
       type: Object as () => PricePrediction,
       required: true
+    },
+    dollarRate: {
+      type: Number,
+      default: 0
     }
-  },
-  data() {
-    return {
-      rate: 0
-    };
   },
   computed: {
     finalPrice(): number {
@@ -79,16 +78,8 @@ export default Vue.extend({
       );
     },
     priceGuaranies(): number {
-      return this.finalPrice * this.rate;
+      return this.finalPrice * this.dollarRate;
     }
-  },
-  async created() {
-    const {
-      dolarpy: {
-        cambioschaco: { venta: rate }
-      }
-    } = await (await fetch("https://dolar.melizeche.com/api/1.0/")).json();
-    this.rate = rate;
   },
   filters: {
     currency(value: number, decimals: number) {

@@ -6,6 +6,7 @@
         <transition name="el-fade-in">
           <predicted-price-card
             :price="predictedPrice"
+            :dollarRate="rate"
             v-if="predictedPrice && predictedPrice.shippingCost"
           />
         </transition>
@@ -56,8 +57,17 @@ export default Vue.extend({
   },
   data() {
     return {
-      predictedPrice: 0
+      predictedPrice: 0,
+      rate: 0
     };
+  },
+  async created() {
+    const {
+      dolarpy: {
+        cambioschaco: { venta: rate }
+      }
+    } = await (await fetch("https://dolar.melizeche.com/api/1.0/")).json();
+    this.rate = rate;
   }
 });
 </script>
