@@ -19,7 +19,7 @@
       </el-col>
       <el-col :xs="24" :sm="12" :md="12">
         <el-row type="flex" align="bottom">
-          <el-form-item label="Peso">
+          <el-form-item label="Peso" style="width: 100%;">
             <el-col :span="9">
               <el-select
                 v-model="metric"
@@ -101,7 +101,9 @@
             size="large"
             v-model="taxIncludedPlan"
             class="full-checkbox"
-            :disabled="onlyTaxIncludedPlanPricePerKilo"
+            :disabled="
+              onlyTaxIncludedPlanPricePerKilo || !hasTaxIncludedPlanPricePerKilo
+            "
             border
             >Plan con impuestos incluidos</el-checkbox
           >
@@ -155,6 +157,31 @@ export default Vue.extend({
     [Checkbox.name]: Checkbox,
     ElMoneyInput
   },
+  directives: { money: VMoney },
+  data() {
+    const commonMoneyConfig = {
+      decimal: ",",
+      thousands: ".",
+      precision: 2,
+      masked: false /* doesn't work with directive */
+    };
+    return {
+      price: 0,
+      usShippingCost: 0,
+      weight: 0,
+      metric: "pounds",
+      categories: taxCategories,
+      couriers,
+      selectedCategory: "",
+      selectedCourier: "",
+      taxIncludedPlan: false,
+      currencyInputMoneyConfig: {
+        ...commonMoneyConfig,
+        prefix: "$ "
+      },
+      weightInputMoneyConfig: commonMoneyConfig
+    };
+  },
   computed: {
     courierRecord(): Courier | undefined {
       return this.couriers.find(c => c.key === this.selectedCourier);
@@ -186,17 +213,20 @@ export default Vue.extend({
       }
       const { pricePerKilo = 0, taxIncludedPlanPricePerKilo = 0 } =
         this.courierRecord || {};
-      const priceToUse = this.hasTaxIncludedPlanPricePerKilo
+      const priceToUse = this.taxIncludedPlan
         ? taxIncludedPlanPricePerKilo
         : pricePerKilo;
       const pyShippingCost = this.kilosWeight * priceToUse;
       return { ...response, shippingCost: pyShippingCost };
     },
     taxes(): number {
-      if (this.taxIncludedPlan || !this.selectedCategory) {
+      if (
+        this.taxIncludedPlan ||
+        (this.price >= 100 && !this.selectedCategory)
+      ) {
         return 0;
       }
-      if (this.price < 100 || this.taxIncludedPlan) {
+      if (this.price < 100) {
         return this.price * ivaCasualTax;
       }
       const category = this.categories.find(
@@ -230,7 +260,7 @@ export default Vue.extend({
     }
   },
   watch: {
-    predictedPrice(value: number) {
+    predictedPrice(value: object) {
       this.$emit("predictedPrice", value);
     },
     hasTaxIncludedPlanPricePerKilo(value: boolean) {
@@ -238,37 +268,11 @@ export default Vue.extend({
         // reset checkbox
         this.taxIncludedPlan = false;
       } else {
+        // use as preferred option
         this.taxIncludedPlan = true;
       }
     }
-  },
-  data() {
-    return {
-      price: 0,
-      usShippingCost: 0,
-      weight: 0,
-      metric: "pounds",
-      categories: taxCategories,
-      couriers,
-      selectedCategory: "",
-      selectedCourier: "",
-      taxIncludedPlan: false,
-      currencyInputMoneyConfig: {
-        decimal: ",",
-        thousands: ".",
-        prefix: "$ ",
-        precision: 2,
-        masked: false /* doesn't work with directive */
-      },
-      weightInputMoneyConfig: {
-        decimal: ",",
-        thousands: ".",
-        precision: 2,
-        masked: false /* doesn't work with directive */
-      }
-    };
-  },
-  directives: { money: VMoney }
+  }
 });
 </script>
 <style scoped>
