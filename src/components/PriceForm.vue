@@ -128,6 +128,12 @@
         </el-col>
       </transition>
     </el-row>
+    <el-row>
+      <warnings-text
+        :courier="courierRecord"
+        :taxIncludedPlan="taxIncludedPlan"
+      />
+    </el-row>
   </el-form>
 </template>
 <script lang="ts">
@@ -137,6 +143,7 @@ import currency from "currency.js";
 
 import { taxCategories, couriers, ivaCasualTax, Courier } from "../data";
 import ElMoneyInput from "./ElMoneyInput.vue";
+import WarningsText from "./WarningsText.vue";
 
 export interface PricePrediction {
   itemPrice: number;
@@ -147,7 +154,8 @@ export interface PricePrediction {
 
 export default Vue.extend({
   components: {
-    ElMoneyInput
+    ElMoneyInput,
+    WarningsText
   },
   directives: { money: VMoney },
   data() {
@@ -234,7 +242,15 @@ export default Vue.extend({
     },
     hasTaxIncludedPlanPricePerKilo(): boolean {
       const courier = this.courierRecord;
-      return Boolean(courier && courier.taxIncludedPlanPricePerKilo);
+      if (courier) {
+        const hasIt = Boolean(courier.taxIncludedPlanPricePerKilo);
+        const isAboveLimit = Boolean(
+          courier.taxIncludedPlanLimit &&
+            this.price > courier.taxIncludedPlanLimit
+        );
+        return hasIt && !isAboveLimit;
+      }
+      return false;
     },
     onlyTaxIncludedPlanPricePerKilo(): boolean {
       const courier = this.courierRecord;

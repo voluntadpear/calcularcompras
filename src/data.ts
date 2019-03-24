@@ -111,6 +111,7 @@ export interface Courier {
   label: string;
   pricePerKilo?: number;
   taxIncludedPlanPricePerKilo?: number;
+  taxIncludedPlanLimit?: number;
 }
 
 export const couriers: Courier[] = [
@@ -124,7 +125,8 @@ export const couriers: Courier[] = [
     key: 'paraguaybox',
     label: 'Paraguaybox',
     pricePerKilo: 16.5,
-    taxIncludedPlanPricePerKilo: 21.5
+    taxIncludedPlanPricePerKilo: 21.5,
+    taxIncludedPlanLimit: 500
   },
   {
     key: 'netbox',
