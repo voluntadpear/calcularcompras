@@ -1,4 +1,10 @@
-export const taxCategories = [
+export interface Category {
+  key: string;
+  label: string;
+  tax: number;
+}
+
+export const taxCategories: Category[] = [
   {
     key: 'electronica',
     label: 'Electrónica y Telecomunicaciones',
@@ -35,6 +41,11 @@ export const taxCategories = [
     tax: 24,
   },
   {
+    key: 'calzados_deportivos',
+    label: 'Calzados Deportivos',
+    tax: 25,
+  },
+  {
     key: 'articulos_deportivos',
     label: 'Artículos Deportivos',
     tax: 30,
@@ -61,22 +72,47 @@ export const taxCategories = [
   },
   {
     key: 'cosmeticos',
-    label: 'Cosméticos y Perfumería',
+    label: 'Cosméticos',
+    tax: 30,
+  },
+  {
+    key: 'perfumes',
+    label: 'Perfumes',
     tax: 30,
   },
   {
     key: 'hogar',
-    label: 'hogar y Cocina',
+    label: 'Hogar',
+    tax: 25,
+  },
+  {
+    key: 'cocina',
+    label: 'Cocina',
+    tax: 25,
+  },
+  {
+    key: 'herramientas',
+    label: 'Herramientas',
+    tax: 36,
+  },
+  {
+    key: 'decoracion_hogar',
+    label: 'Decoración del Hogar',
     tax: 25,
   },
   {
     key: 'automotor',
     label: 'Respuestos del Automotor',
-    tax: 25,
+    tax: 28,
   },
   {
     key: 'antiguedades',
-    label: 'Obras de Arte & Antiguedades',
+    label: 'Antiguedades',
+    tax: 22,
+  },
+  {
+    key: 'obras_arte',
+    label: 'Obras de Arte',
     tax: 22,
   },
   {

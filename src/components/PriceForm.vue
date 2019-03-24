@@ -118,7 +118,7 @@
           >
             <el-select v-model="selectedCategory" size="large" name="Categoría">
               <el-option
-                v-for="category of categories"
+                v-for="category of sortedCategories"
                 :key="category.key"
                 :label="category.label"
                 :value="category.key"
@@ -141,7 +141,13 @@ import Vue from "vue";
 import { VMoney } from "v-money";
 import currency from "currency.js";
 
-import { taxCategories, couriers, ivaCasualTax, Courier } from "../data";
+import {
+  taxCategories,
+  couriers,
+  ivaCasualTax,
+  Courier,
+  Category
+} from "../data";
 import ElMoneyInput from "./ElMoneyInput.vue";
 import WarningsText from "./WarningsText.vue";
 
@@ -265,6 +271,9 @@ export default Vue.extend({
           this.selectedCourier &&
           this.price > 100
       );
+    },
+    sortedCategories(): Category[] {
+      return this.categories.sort((a, b) => (a.label > b.label ? 1 : -1));
     }
   },
   watch: {
