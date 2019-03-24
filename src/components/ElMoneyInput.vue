@@ -1,5 +1,5 @@
 <template>
-  <el-input v-model.lazy="inputValue" v-money="money" v-bind="$attrs">
+  <el-input v-model="inputValue" v-money="money" v-bind="$attrs">
     <!-- Let's pass any named slot to the el-input -->
     <slot
       v-for="(content, slotName) of $slots"
@@ -10,14 +10,10 @@
 </template>
 <script lang="ts">
 import Vue from "vue";
-import { Input } from "element-ui";
 import { VMoney } from "v-money";
 import currency from "currency.js";
 
 export default Vue.extend({
-  components: {
-    [Input.name]: Input
-  },
   props: {
     money: {
       type: Object,

@@ -1,6 +1,6 @@
 <template>
   <el-card class="box-card">
-    <h2>
+    <h2 class="predicted-price-output">
       USD $<strong>{{ finalPrice | currency(2) }}</strong>
     </h2>
     <transition name="fade">
@@ -49,15 +49,9 @@
 </template>
 <script lang="ts">
 import Vue from "vue";
-import { Card, Collapse, CollapseItem } from "element-ui";
 import { PricePrediction } from "@/components/PriceForm.vue";
 
 export default Vue.extend({
-  components: {
-    [Card.name]: Card,
-    [Collapse.name]: Collapse,
-    [CollapseItem.name]: CollapseItem
-  },
   props: {
     price: {
       type: Object as () => PricePrediction,

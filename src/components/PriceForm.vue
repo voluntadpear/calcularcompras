@@ -132,7 +132,6 @@
 </template>
 <script lang="ts">
 import Vue from "vue";
-import { Form, FormItem, Select, Option, Row, Col, Checkbox } from "element-ui";
 import { VMoney } from "v-money";
 import currency from "currency.js";
 
@@ -148,13 +147,6 @@ export interface PricePrediction {
 
 export default Vue.extend({
   components: {
-    [Form.name]: Form,
-    [FormItem.name]: FormItem,
-    [Select.name]: Select,
-    [Option.name]: Option,
-    [Row.name]: Row,
-    [Col.name]: Col,
-    [Checkbox.name]: Checkbox,
     ElMoneyInput
   },
   directives: { money: VMoney },
