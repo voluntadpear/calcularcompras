@@ -16,7 +16,7 @@ function mockFetch(data: any) {
 
 describe('App.vue', () => {
   let localVue: VueConstructor;
-  let wrapper: Wrapper<App>;
+  let wrapper: Wrapper<any>;
   beforeAll(() => {
     if (config && config.stubs) {
       config.stubs.transition = false

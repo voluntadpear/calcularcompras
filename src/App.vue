@@ -7,7 +7,7 @@
           <predicted-price-card
             :price="predictedPrice"
             :dollarRate="rate"
-            v-if="predictedPrice && predictedPrice.shippingCost"
+            v-if="shouldShowPredictedPriceCard"
           />
         </transition>
       </el-main>
@@ -57,7 +57,12 @@ export default Vue.extend({
   },
   data() {
     return {
-      predictedPrice: 0,
+      predictedPrice: {
+        itemPrice: 0,
+        usShippingCost: 0,
+        taxes: 0,
+        shippingCost: 0
+      },
       rate: 0
     };
   },
@@ -68,6 +73,18 @@ export default Vue.extend({
       }
     } = await (await fetch("https://dolar.melizeche.com/api/1.0/")).json();
     this.rate = rate;
+  },
+  computed: {
+    shouldShowPredictedPriceCard(): boolean {
+      return Boolean(this.predictedPrice.shippingCost);
+    }
+  },
+  watch: {
+    shouldShowPredictedPriceCard(value) {
+      if (value && window.navigator && window.navigator.vibrate) {
+        window.navigator.vibrate(200);
+      }
+    }
   }
 });
 </script>
