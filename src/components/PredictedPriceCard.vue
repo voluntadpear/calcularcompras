@@ -1,10 +1,12 @@
 <template>
   <el-card class="box-card">
-    <h2 class="predicted-price-output">
+    <h2 aria-label="Costo total">
       USD $<strong>{{ finalPrice | currency(2) }}</strong>
     </h2>
     <transition name="fade">
-      <h3 v-if="priceGuaranies">(Gs. {{ priceGuaranies | currency(0) }})</h3>
+      <h3 v-if="priceGuaranies" aria-label="Costo en guaraníes">
+        (Gs. {{ priceGuaranies | currency(0) }})
+      </h3>
     </transition>
     <el-collapse>
       <el-collapse-item title="Detalles">
