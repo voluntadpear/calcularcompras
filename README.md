@@ -1,33 +1,32 @@
-# amazon-compras
+# Calcular Compras
+
+Herramienta para estimar el costo del transporte de paquetes desde EE.UU. hasta Asunción mediante las empresas de casilla de correo.
+
+Tool to estimate the cost of shipping packages from USA to Asunción, Paraguay by using the services provided by different companies.
 
 ## Project setup
 ```
-yarn install
+npm install
 ```
 
 ### Compiles and hot-reloads for development
 ```
-yarn run serve
+npm run serve
 ```
 
 ### Compiles and minifies for production
 ```
-yarn run build
-```
-
-### Run your tests
-```
-yarn run test
+npm run build
 ```
 
 ### Lints and fixes files
 ```
-yarn run lint
+npm run lint
 ```
 
 ### Run your unit tests
 ```
-yarn run test:unit
+npm run test:unit
 ```
 
 ### Customize configuration
