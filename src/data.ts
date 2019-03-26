@@ -190,6 +190,11 @@ export const couriers: Courier[] = [
     label: 'Club Dinacopa Box',
     pricePerKilo: 15.5
   },
+  {
+    key: 'pycourier',
+    label: 'Paraguay Courier',
+    taxIncludedPlanPricePerKilo: 20.9
+  },
 ];
 
 export const ivaCasualTax = 0.13;

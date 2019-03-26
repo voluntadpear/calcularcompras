@@ -288,6 +288,11 @@ export default Vue.extend({
         // use as preferred option
         this.taxIncludedPlan = true;
       }
+    },
+    onlyTaxIncludedPlanPricePerKilo(value: boolean) {
+      if (value) {
+        this.taxIncludedPlan = true;
+      }
     }
   }
 });
