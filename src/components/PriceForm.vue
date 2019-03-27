@@ -98,6 +98,7 @@
           :class="{ 'amz-disabled': secondRowDisabled }"
         >
           <el-checkbox
+            aria-label="Plan con impuestos incluidos"
             size="large"
             v-model="taxIncludedPlan"
             class="full-checkbox"
