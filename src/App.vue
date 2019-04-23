@@ -34,6 +34,7 @@
           <a
             href="https://www.flaticon.com/authors/kiranshastry"
             target="_blank"
+            rel="noopener"
             >Kiranshastry</a
           >
           de www.flaticon.com
