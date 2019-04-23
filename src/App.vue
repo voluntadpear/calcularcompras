@@ -109,6 +109,19 @@ export default Vue.extend({
   margin: 25px auto;
 }
 
+.el-input-group__append,
+.el-input-group__prepend {
+  background-color: #fff;
+}
+
+.el-checkbox__input.is-checked + .el-checkbox__label {
+  color: #2c71ba;
+}
+
+.el-checkbox__input.is-disabled + span.el-checkbox__label {
+  color: #747474;
+}
+
 .el-form-item__label {
   font-size: 30px;
 }

@@ -2,8 +2,9 @@
   <el-form label-position="top" size="medium" lang="es-PY">
     <el-row :gutter="40">
       <el-col :xs="24" :sm="12" :md="12">
-        <el-form-item label="Precio">
+        <el-form-item label="Precio" for="price">
           <el-money-input
+            id="price"
             size="large"
             placeholder="Precio"
             @input="price = $event"
@@ -19,7 +20,7 @@
       </el-col>
       <el-col :xs="24" :sm="12" :md="12">
         <el-row type="flex" align="bottom">
-          <el-form-item label="Peso" style="width: 100%;">
+          <el-form-item label="Peso" style="width: 100%;" for="weight">
             <el-col :span="9">
               <el-select
                 v-model="metric"
@@ -36,6 +37,7 @@
               <el-money-input
                 size="large"
                 placeholder="Peso"
+                id="weight"
                 @input="weight = $event"
                 :money="weightInputMoneyConfig"
                 label="Peso"
@@ -51,11 +53,13 @@
       <el-col :xs="24" :sm="12" :md="12">
         <el-form-item
           label="Envío e Impuestos EE.UU."
+          for="us-shipping"
           class="opacity-transition"
           :class="{ 'amz-disabled': secondRowDisabled }"
         >
           <el-money-input
             size="large"
+            id="us-shipping"
             placeholder="Costo"
             @input="usShippingCost = $event"
             :money="currencyInputMoneyConfig"
@@ -72,6 +76,7 @@
       <el-col :xs="24" :sm="12" :md="12">
         <el-form-item
           label="Courier"
+          for="courier"
           class="opacity-transition"
           :class="{ 'amz-disabled': secondRowDisabled }"
         >
@@ -79,6 +84,7 @@
             v-model="selectedCourier"
             size="large"
             name="Courier"
+            id="courier"
             :disabled="secondRowDisabled"
           >
             <el-option
@@ -114,10 +120,16 @@
         <el-col :xs="24" :sm="12" :md="12" v-if="needsCategory">
           <el-form-item
             label="Categoría"
+            for="category"
             class="opacity-transition"
             :class="{ 'amz-disabled': secondRowDisabled }"
           >
-            <el-select v-model="selectedCategory" size="large" name="Categoría">
+            <el-select
+              v-model="selectedCategory"
+              size="large"
+              name="Categoría"
+              id="category"
+            >
               <el-option
                 v-for="category of sortedCategories"
                 :key="category.key"
@@ -316,7 +328,7 @@ export default Vue.extend({
 }
 
 .metric-select >>> .el-input__inner {
-  background-color: #f5f7fa;
+  background-color: #fff;
   color: #909399;
 }
 
