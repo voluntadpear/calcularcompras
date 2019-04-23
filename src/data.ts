@@ -195,6 +195,31 @@ export const couriers: Courier[] = [
     label: 'Paraguay Courier',
     taxIncludedPlanPricePerKilo: 20.9
   },
+  {
+    key: 'fastbox',
+    label: 'Fastbox',
+    pricePerKilo: 16,
+  },
+  {
+    key: 'frontliner',
+    label: 'Frontliner',
+    taxIncludedPlanPricePerKilo: 20.9,
+  },
+  {
+    key: 'clickbox',
+    label: 'Clickbox',
+    taxIncludedPlanPricePerKilo: 20,
+  },
+  {
+    key: 'flashbox',
+    label: 'Flashbox',
+    taxIncludedPlanPricePerKilo: 19.5,
+  },
+  {
+    key: 'enviamicompra',
+    label: 'Envia Mi Compra',
+    taxIncludedPlanPricePerKilo: 17.99,
+  },
 ];
 
 export const ivaCasualTax = 0.13;
