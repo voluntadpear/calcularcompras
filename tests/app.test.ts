@@ -2,7 +2,7 @@ import { mount, createLocalVue, config, Wrapper } from '@vue/test-utils';
 import ElementUI from 'element-ui'
 import flushPromises from 'flush-promises'
 
-import App from '@/App.vue';
+import App from '../src/App.vue';
 import { VueConstructor } from 'vue';
 
 function mockFetch(data: any) {
@@ -16,7 +16,7 @@ function mockFetch(data: any) {
 
 describe('App.vue', () => {
   let localVue: VueConstructor;
-  let wrapper: Wrapper<App>;
+  let wrapper: Wrapper<any>;
   beforeAll(() => {
     if (config && config.stubs) {
       config.stubs.transition = false
