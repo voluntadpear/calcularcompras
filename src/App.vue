@@ -29,6 +29,15 @@
           >
           de Marce Elizeche
         </p>
+        <p>
+          Ícono hecho por
+          <a
+            href="https://www.flaticon.com/authors/kiranshastry"
+            target="_blank"
+            >Kiranshastry</a
+          >
+          de www.flaticon.com
+        </p>
         <p>2019 - Guillermo Peralta</p>
         <small id="disclaimer"
           ><strong>Atención: </strong> Costos no garantizados. Consultar con
