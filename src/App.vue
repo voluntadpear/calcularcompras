@@ -39,7 +39,15 @@
           >
           de www.flaticon.com
         </p>
-        <p>2019 - Guillermo Peralta</p>
+        <p>
+          Código fuente en
+          <a
+            href="https://github.com/voluntadpear/calcularcompras"
+            target="_blank"
+            rel="noopener"
+            >GitHub</a
+          >
+        </p>
         <small id="disclaimer"
           ><strong>Atención: </strong> Costos no garantizados. Consultar con
           cada empresa en específico para conocer el precio final. Precios de
